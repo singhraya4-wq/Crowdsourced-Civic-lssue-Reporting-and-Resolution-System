@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<style>
+body {
+    background:#202124;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+    margin-top:100px;
+}
+input,button {
+    padding:10px;
+    margin:10px;
+    border-radius:6px;
+}
+button {
+    background: linear-gradient(270deg,#4285F4,#EA4335,#FBBC05,#34A853);
+    color:white;
+    border:none;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Login</h2>
+
+<input id="user" placeholder="Username"><br>
+<input id="pass" type="password" placeholder="Password"><br>
+
+<button onclick="login()">Login</button>
+
+<script>
+function login(){
+    const u=document.getElementById("user").value;
+    const p=document.getElementById("pass").value;
+
+    if(u==="admin" && p==="123"){
+        window.location="/admin";
+    } else {
+        window.location="/user";
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/admin",
+      "dest": "/public/admin.html"
+    },
+    {
+      "src": "/user",
+      "dest": "/public/user.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/login.html"
+    }
+  ]
+}
