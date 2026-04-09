@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div style="text-align:center; margin-top:120px;">
+    <h1>🚧 Civic System</h1>
+
+    <input id="user" placeholder="Username"><br><br>
+    <input id="pass" type="password" placeholder="Password"><br><br>
+
+    <button type="button" onclick="login()">Login</button>
+</div>
+
+<script>
+async function login(){
+    let username = document.getElementById("user").value;
+    let password = document.getElementById("pass").value;
+
+    try {
+        let res = await fetch("/api/login",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({username, password})
+        });
+
+        let data = await res.json();
+        console.log(data); // 🔥 debug
+
+        if(data.msg === "success"){
+            window.location.href = "/dashboard";
+        } else {
+            alert("Wrong password");
+        }
+
+    } catch(err){
+        console.log(err);
+        alert("Something went wrong. Check console.");
+    }
+}
+</script>
+
+</body>
+</html>

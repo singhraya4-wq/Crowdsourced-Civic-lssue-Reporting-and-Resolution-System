@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/style.css">
+<script src="/static/script.js"></script>
+</head>
+
+<body>
+
+<div class="card">
+<h2>🚨 Report Issue</h2>
+
+<input id="title" placeholder="Issue title">
+<input id="location" placeholder="Location">
+
+<select id="category">
+<option>Road</option>
+<option>Water</option>
+<option>Electricity</option>
+<option>Sanitation</option>
+</select>
+
+<select id="priority">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+
+<button onclick="report()">Submit Report</button>
+<p style="color:#9aa0a6;">You’ll receive status updates: Reported → In Progress → Resolved</p>
+</div>
+
+<div id="toast"></div>
+
+<script>
+async function report(){
+    await fetch("/api/report",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            title: title.value,
+            location: location.value,
+            category: category.value,
+            priority: priority.value
+        })
+    });
+
+    showToast("✅ Report Submitted");
+}
+</script>
+<div id="popup" class="popup">
+  <div class="popup-box">
+    <h2>✅ Report Submitted</h2>
+    <p>Your issue has been recorded successfully.</p>
+    <button onclick="closePopup()">OK</button>
+  </div>
+</div>
+<a href="/myreports" class="special-link">📂 My Reports</a>
+
+</body>
+</html>

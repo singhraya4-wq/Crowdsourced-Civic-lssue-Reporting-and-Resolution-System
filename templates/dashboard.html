@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+<div class="grid">
+
+<div class="card stat">
+Total Issues
+<h1 id="total"></h1>
+</div>
+
+<div class="card stat">
+Pending
+<h1 id="pending"></h1>
+</div>
+
+<div class="card stat">
+Resolved
+<h1 id="resolved"></h1>
+</div>
+
+</div>
+
+<div class="layout">
+
+<div class="sidebar">
+<a href="/dashboard">Dashboard</a>
+<a href="/user">Report</a>
+<a href="/admin">Admin</a>
+</div>
+
+<div class="main">
+<div class="content">
+
+<div class="grid">
+<div class="card" id="total"></div>
+<div class="card" id="pending"></div>
+<div class="card" id="resolved"></div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+async function load(){
+    let res=await fetch("/api/issues");
+    let data=await res.json();
+
+    let total=data.length;
+    let pending=data.filter(i=>i.status==="Pending").length;
+    let resolved=data.filter(i=>i.status==="Resolved").length;
+
+    document.getElementById("total").innerText="Total: "+total;
+    document.getElementById("pending").innerText="Pending: "+pending;
+    document.getElementById("resolved").innerText="Resolved: "+resolved;
+}
+
+load();
+</script>
+<div class="card">
+<h3>📊 Issue Distribution</h3>
+<canvas id="categoryChart"></canvas>
+</div>
+
+<div class="card">
+<h3>⚡ Priority Breakdown</h3>
+<canvas id="priorityChart"></canvas>
+</div>
+
+<div class="card">
+<h3>📈 Status Overview</h3>
+<canvas id="statusChart"></canvas>
+</div>
+<a href="/myreports" class="special-link">📂 My Reports</a>
+<script>
+window.onload = load;
+</script>
+
+</body>
+</html>

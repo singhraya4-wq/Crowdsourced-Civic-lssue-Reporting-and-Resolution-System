@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+<div class="sidebar">
+<a href="/dashboard">Dashboard</a>
+<a href="/user">Report</a>
+<a href="/myreports">My Reports</a>
+<a href="/admin">Admin</a>
+</div>
+
+<div class="main">
+<div class="content">
+
+<h2>📂 My Reports</h2>
+<div id="list"></div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+async function load(){
+    let res=await fetch("/api/issues");
+    let data=await res.json();
+
+    let list=document.getElementById("list");
+    list.innerHTML="";
+
+    data.forEach(i=>{
+        list.innerHTML+=`
+        <div class="card">
+        <b>${i.title}</b><br>
+        📍 ${i.location}<br>
+        🏷️ ${i.category} | ⚡ ${i.priority}<br>
+        🕒 ${i.timestamp}<br>
+        Status: ${i.status}
+        </div>`;
+    });
+}
+
+load();
+fetch("/api/myissues")
+</script>
+
+</body>
+</html>

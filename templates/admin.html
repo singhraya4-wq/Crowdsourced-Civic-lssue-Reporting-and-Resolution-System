@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/style.css">
+<script src="/static/script.js"></script>
+</head>
+
+<body>
+
+<div class="layout">
+
+<div class="sidebar">
+<a href="/dashboard">Dashboard</a>
+<a href="/user">Report</a>
+<a href="/admin">Admin</a>
+</div>
+
+<div class="main">
+<div class="content" id="list"></div>
+</div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+async function update(id){
+    await fetch("/api/update",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({id,status:"Resolved"})
+    });
+    showToast("Updated");
+    load();
+}
+
+async function load(){
+    let res=await fetch("/api/issues");
+    let data=await res.json();
+
+    let list=document.getElementById("list");
+    list.innerHTML="";
+
+    data.forEach(i=>{
+        list.innerHTML += `
+<table class="table">
+<tr>
+<td><b>${i.title}</b><br>${i.location}</td>
+<td>${i.category}</td>
+<td><span class="badge ${i.priority.toLowerCase()}">${i.priority}</span></td>
+<td>${i.status}</td>
+<td>${i.timestamp}</td>
+<td><button onclick="update(${i.id})">Resolve</button></td>
+</tr>
+</table>`;
+    });
+}
+
+load();
+</script>
+
+</body>
+</html>
